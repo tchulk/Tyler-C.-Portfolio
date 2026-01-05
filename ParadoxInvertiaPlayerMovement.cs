@@ -13,29 +13,44 @@ public class PlayerMovement : MonoBehaviour
     public bool IsInUI = false;
 
     private bool ButtonToChangeGravityLeft;
+
     private bool ButtonToChangeGravityRight;
+
     public int GravityValueLeft = 1;
+
     public int GravityValueRight = 1;
+
    public int GravityValue;
 
 
     private float RotationSpeed = 1f;
+
     private bool jumpInput;
+
     private bool Grounded;
 
     private bool MoveForward;
+
     private bool StopMoveForward;
+
     private bool MoveBackward;
+
     private bool StopMoveBackward;
+
     private bool Jump;
+
     private bool MovingForward;
+
     private bool MovingBackward;
+
     private bool Fire;
 
     private float verticalDirection = -2;
+
     public Animator animator;
 
     public AudioSource GunFire;
+
     public AudioSource GravityChangeSound;
 
     private float GTimer = 1;
@@ -44,26 +59,40 @@ public class PlayerMovement : MonoBehaviour
     private float RotateCameraPitch;
 
     private Camera FirstPersonCam;
+
     private CharacterController characterController;
+
     private ConstantForce ConstantForce;
+
     private Vector3 ForceDirection;
+
     private Rigidbody Rigidbodys;
+
     private CapsuleCollider TriggerCollider;
+
     public GameObject PlayerGun;
+
     public GameObject PlayerLeftHand;
 
 
     private void Awake()
     {
         characterController = GetComponent<CharacterController>();
+
         FirstPersonCam = GetComponentInChildren<Camera>();
+
         ConstantForce = GetComponent<ConstantForce>();
+
         Rigidbodys = GetComponent<Rigidbody>();
         
         TriggerCollider = GetComponent<CapsuleCollider>();
+
         animator = GetComponent<Animator>();
+
         ForceDirection = new Vector3(0, -1000f, 0);
+
         ConstantForce.force = ForceDirection;
+
         GravityValue = 1;
 
 
@@ -74,17 +103,27 @@ public class PlayerMovement : MonoBehaviour
     {
         // Assigning input values to variables
         jumpInput = Input.GetButtonDown("Jump");
+
         ButtonToChangeGravityLeft = Input.GetButtonDown("GravityLeft");
+
         ButtonToChangeGravityRight = Input.GetButtonDown("GravityRight");
-        MoveForward = Input.GetButtonDown("Vertical");
-        StopMoveForward = Input.GetButtonUp("Vertical");
-        MoveBackward = Input.GetButtonDown("VerticalBack");
-        StopMoveBackward = Input.GetButtonUp("VerticalBack");
+
+        MoveForward = Input.GetButtonDown("Forward");
+
+        StopMoveForward = Input.GetButtonUp("Forward");
+
+        MoveBackward = Input.GetButtonDown("Backward");
+
+        StopMoveBackward = Input.GetButtonUp("Backward");
+
         Fire = Input.GetMouseButtonDown(0);
 
         animator.SetBool("MovingForward", MovingForward);
+
         animator.SetBool("MoveingBackward", MoveBackward);
+
         animator.SetBool("Grounded", Grounded);
+
         animator.SetBool("Shoot", Fire);
 
         if (Jump == true) 
@@ -98,9 +137,13 @@ public class PlayerMovement : MonoBehaviour
             gameObject.GetComponent<PlayerFire>().Fire();
         }
         CursorLock();
+
         Movement();
+
         JumpandGravity();
+        
         CameraMovement();
+        
         ChangeGravity();
     }
 
